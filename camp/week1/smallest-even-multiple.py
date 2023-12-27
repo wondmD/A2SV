@@ -1,9 +1,8 @@
 class Solution:
     def smallestEvenMultiple(self, n: int) -> int:
-        p = n
-        if p%2 == 1:
-            p+=1
+        my_intiger = n
         while True:
-            if p%n == 0 and p%2 == 0:
-                return (p)
-            p+=2
+            if my_intiger % n == 0 and my_intiger % 2 == 0:
+                return (my_intiger)
+            my_intiger += 1
+        
