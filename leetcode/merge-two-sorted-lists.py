@@ -4,39 +4,34 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        if list1 and list2:
-            temp1 = list1
-            temp2 = list2
-            if temp1.val <= temp2.val:
-                head = temp1
-                temp1 = temp1.next
-            else:
-                head = temp2
-                temp2 = temp2.next 
-            temp = head
-            if temp1 and temp2:
-                
-                while temp1 and temp2:
-                    if temp1.val <= temp2.val:
-                        temp.next = temp1
-                        temp1 = temp1.next
-                    else:
-                        temp.next = temp2
-                        temp2 = temp2.next
-                    temp = temp.next
-            while temp1:
-                temp.next = temp1
-                temp = temp.next
-                temp1 = temp1.next
-            while temp2:
-                temp.next = temp2
-                temp = temp.next
-                temp2 = temp2.next
-            return (head)
-        elif list1:
-            return list1
-        elif list2 :
-            return list2 
-        return None
+    def do_the_magic(self,hd,merged,head1,head2):
+        print(hd)
+        print(merged)
+        if merged ==None:
+            merged = ListNode()
+        if hd==None:
+            hd = merged
+        if head1==None:
+            merged.next = head2
+            return hd.next
+        elif head2==None:
+            merged.next = head1
+            return hd.next
+        elif head1.val<head2.val:
+            merged.next = head1
+            head1 = head1.next
+        elif head1.val>=head2.val:
+            merged.next = head2
+            head2 = head2.next
+        
+        merged = merged.next
+        next_call = self.do_the_magic(hd,merged,head1,head2)
+        return hd.next
 
+        
+        
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        ls = self.do_the_magic(None,None,list1,list2)
+        return ls
+
+       
