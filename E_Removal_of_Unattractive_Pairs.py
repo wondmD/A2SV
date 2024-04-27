@@ -1,14 +1,20 @@
-from collections import Counter
-t = int(input())
+import sys
+input  = sys.stdin.readline
 
-for _ in range(t):
+
+orda = ord('a')
+
+for _ in range(int(input())):
     n = int(input())
     s = input()
+    cnt = [0] * 26
+
+    for i in range(n):
+        cnt[ord(s[i]) - orda] += 1
+
+    mx = max(cnt)
+
+    print(max(2 * mx - n, n % 2))
     
 
-    d = Counter(s).most_common()
-    md = d[0][1]
-    sm = sum([i[1] for i in d[1:]])
-    if 
-    # print (d.values())
-    
+
