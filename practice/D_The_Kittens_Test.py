@@ -1,8 +1,4 @@
 from sys import stdin
-from collections import defaultdict, deque
-from bisect import bisect_left, bisect_right
-
-
 def find(x):
     if x == parent[x]:
         return x
@@ -12,38 +8,22 @@ def union(x,y):
     parent_y = find(y)
 
     if parent_x != parent_y:
-        if rank[parent_x] >= rank[parent_y]:
-            ch[parent_x].append(y)
+        if size[parent_x] >= size[parent_y]:
             parent[parent_y] = parent_x
-            rank[parent_x] += 1
+            lists[parent_x].extend(lists[parent_y])
+            size[parent_x] += size[parent_y]
         else:
-            ch[parent_y].append(x)
             parent[parent_x] = parent_y
-            rank[parent_y] += 1
-num = int(stdin.readline())
-parent = {i+1:i+1 for i in range(num)}
-ch = {i+1:[i+1] for i in range(num)}
-rank = {i+1:i+1 for i in range(num)}
-vi = set()
-ans = []
-def dfs(node):
-    if node not in graph:
-        ans.append(node)
-        vi.add(node)
-    for i in graph[node]:
-        if i not in vi:
-            dfs(i)
-            # vi.add(i)
+            lists[parent_y].extend(lists[parent_x])
+            size[parent_y] += size[parent_x]
+
         
-graph = defaultdict(set)
+a = int(input())
+parent = {i:i for i in range(1, a+1)}
+lists = {i:[i] for i in range(1, a+1)}
+size = {i:1 for i in range(1, a+1)}
 
-for i in range(num-1):
-    a, b= map(int, stdin.readline().split())
-    graph[a].add(b)
-
-for i in range(1,num+1):
-    if i not in graph:
-        ans.append(i)
-    elif i not in vi:
-        dfs(i)
-print(ans)
+for i in range(a-1):
+    x,y= map(int, stdin.readline().split())
+    union(x,y)
+print(*lists[find(1)])
